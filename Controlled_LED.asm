@@ -1,0 +1,32 @@
+#include "p18f452.inc"
+
+    ORG 00H
+    BSF TRISD , 0
+    MOVLW 07H
+    MOVWF T0CON
+    
+AGAIN    MOVLW 00H
+    MOVWF TMR0H
+    MOVLW 00H
+    MOVWF TMR0L
+    BCF INTCON , TMR0IF
+    BSF T0CON, TMR0ON
+    CALL LOOP
+    BTG PORTD , 0
+    BRA AGAIN
+    
+    
+LOOP:
+    BTFSS INTCON , TMR0IF
+    BRA LOOP
+    BCF T0CON , TMR0ON
+    RETURN
+    END
+
+
+
+
+
+
+
+
